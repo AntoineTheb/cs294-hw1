@@ -44,15 +44,7 @@ def build_model(train_data, train_label):
     return model
 
 
-def train_model(expert_data, test_data_size):
-    train_data = expert_data['observations'][test_data_size:]
-    test_data = expert_data['observations'][:test_data_size]
-    train_label = expert_data['actions'][test_data_size:]
-    test_label = expert_data['actions'][:test_data_size]
-
-    model = build_model(train_data, train_label)
-    # model.summary()
-
+def train_model(model, train_data, train_label, test_data, test_label):
     EPOCHS = 500
 
     # Store training stats
@@ -99,4 +91,12 @@ def play(policy, envname, max_timesteps, num_rollouts):
     print('mean return', np.mean(returns))
     print('std of return', np.std(returns))
 
+def get_data(observations, actions):
+    test_data_size = int(len(observations) / 10)
+    train_data = np.array(observations[test_data_size:])
+    test_data = np.array(observations[:test_data_size])
+    train_label = np.array(actions[test_data_size:])
+    test_label = np.array(actions[:test_data_size])
+    
+    return train_data, test_data, train_label, test_label
 

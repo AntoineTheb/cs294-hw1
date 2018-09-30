@@ -72,11 +72,18 @@ def main():
             args.max_timesteps,
             args.num_rollouts)
 
-        num_test = int(expert_data['observations'].shape[0] / 10)
+        test_data_size = int(expert_data['observations'].shape[0] / 10)
+        train_data = expert_data['observations'][test_data_size:]
+        test_data = expert_data['observations'][:test_data_size]
+        train_label = expert_data['actions'][test_data_size:]
+        test_label = expert_data['actions'][:test_data_size]
 
-        model = train_model(expert_data, num_test)
+        model = build_model(train_data, train_label)
+
+        train_model(model, train_data, train_label, test_data, test_label)
         plt.show()
-        play(model, args.envname, args.max_timesteps, args.num_rollouts)
+        while True:
+            play(model, args.envname, args.max_timesteps, args.num_rollouts)
 
 if __name__ == '__main__':
     main()
