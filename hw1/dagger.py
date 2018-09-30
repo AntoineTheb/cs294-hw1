@@ -38,9 +38,9 @@ def dagger(expert_file, envname, render, max_timesteps, num_rollouts, iterations
 
     train_data, test_data, train_label, test_label = get_data(observations, actions)
 
+    policy = build_model(train_data, train_label)
     for j in range(iterations):
         # step 1
-        policy = build_model(train_data, train_label)
         train_model(policy, train_data, train_label, test_data, test_label)
         for i in range(num_rollouts):
             obs = env.reset()
@@ -88,8 +88,8 @@ def main():
             args.max_timesteps,
             args.num_rollouts,
             5)
-        while True:
-            play(model, args.envname, args.max_timesteps, args.num_rollouts)
+        plt.show()
+        play(model, args.envname, args.max_timesteps, args.num_rollouts)
 
 if __name__ == '__main__':
     main()

@@ -97,6 +97,6 @@ def get_data(observations, actions):
     test_data = np.array(observations[:test_data_size])
     train_label = np.array(actions[test_data_size:])
     test_label = np.array(actions[:test_data_size])
-    
+
     return train_data, test_data, train_label, test_label
 

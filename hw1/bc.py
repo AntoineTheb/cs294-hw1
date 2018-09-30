@@ -39,11 +39,6 @@ def get_experts_data(expert_file, envname, render, max_timesteps, num_rollouts):
 
         returns.append(totalr)
 
-    # print('returns', returns)
-    print('mean return', np.mean(returns))
-    print('std of return', np.std(returns))
-
-
     expert_data['observations'] = np.array(observations)
     expert_data['actions'] = np.array(actions)
 
@@ -82,8 +77,7 @@ def main():
 
         train_model(model, train_data, train_label, test_data, test_label)
         plt.show()
-        while True:
-            play(model, args.envname, args.max_timesteps, args.num_rollouts)
+        play(model, args.envname, args.max_timesteps, args.num_rollouts)
 
 if __name__ == '__main__':
     main()
