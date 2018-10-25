@@ -110,7 +110,7 @@ def main():
             args.max_timesteps,
             args.iterations)
 
-    play(args.envname, args.max_timesteps)
+    play(args.envname, args.max_timesteps, args.iterations)
 
 if __name__ == '__main__':
     main()

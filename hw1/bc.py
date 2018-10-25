@@ -56,7 +56,7 @@ def get_experts_data(expert_file, envname, render, max_timesteps, num_rollouts):
             model = build_model(train_data, train_label)
             print('Training model ...')
             train_model(model, train_data, train_label, test_data, test_label, False)
-            policy.save('models/{}.h5'.format(envname))
+            model.save('models/{}.h5'.format(envname))
 
 def main():
     import argparse
@@ -67,14 +67,19 @@ def main():
     parser.add_argument("--max_timesteps", type=int)
     parser.add_argument('--num_rollouts', type=int, default=20,
                         help='Number of expert roll outs')
-    args = parser.parse_args()
-    model = get_experts_data(args.expert_policy_file,
-        args.envname,
-        args.render,
-        args.max_timesteps,
-        args.num_rollouts)
+    parser.add_argument('--load', type=bool, default=False,
+                        help='Use a pre-existing model or train a new one')
 
-    play(model, args.envname, args.max_timesteps)
+
+    args = parser.parse_args()
+    if not args.load:
+        model = get_experts_data(args.expert_policy_file,
+            args.envname,
+            args.render,
+            args.max_timesteps,
+            args.num_rollouts)
+
+    play(args.envname, args.max_timesteps)
 
 if __name__ == '__main__':
     main()

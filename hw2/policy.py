@@ -87,7 +87,6 @@ def play(envname, max_timesteps):
                     obs, r, done, _ = env.step(action)
                     totalr += r
                     steps += 1
-
                     env.render()
                     if steps >= max_steps:
                         break
